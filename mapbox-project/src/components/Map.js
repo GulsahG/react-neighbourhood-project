@@ -3,8 +3,14 @@ import ReactMapboxGl from "react-mapbox-gl";
 import { ZoomControl, Popup, Marker } from "react-mapbox-gl";
 import MarkerIcon from './markers/MarkerIcon';
 
-class Map extends Component {
+const Map = ReactMapboxGl({
+    accessToken: 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA',
+    minZoom: 8,
+    doubleClickZoom: true,
+    maxZoom: 18
+  })
 
+class MyMap extends Component {
     state = {
         currentPopup: [-70,5],
         i: ''
@@ -18,15 +24,7 @@ class Map extends Component {
         this.setState({currentPopup: [-70,5]})
     }
 
-
     render() {
-      const Map = ReactMapboxGl({
-        accessToken: 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA',
-        minZoom: 8,
-        doubleClickZoom: true,
-        maxZoom: 18
-      })
-
       const { center, zoom, arabica, fabbs,
         anıtkabir, tedu } = this.props
       const { currentPopup, i } = this.state
@@ -72,4 +70,4 @@ class Map extends Component {
     }
 }
 
-export default Map;
+export default MyMap;
