@@ -22,8 +22,12 @@
   font-size: large;
 }
 
-.popup {
-  height: 5px;
+.enabled {
+  display:block !important;
+}
+
+.disabled {
+  display:none;
 }
 
 @keyframes App-logo-spin {

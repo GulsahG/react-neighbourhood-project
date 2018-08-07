@@ -25,10 +25,10 @@ class App extends Component {
           <Map 
           center={this.state.center}
           zoom={this.state.zoom}
-          arabicaCoordinates={this.state.coordinates[0]}
-          fabbsCoordinates={this.state.coordinates[1]}
-          anıtkabirCoordinates={this.state.coordinates[2]}
-          teduCoordinates={this.state.coordinates[3]}
+          arabica={this.state.coordinates[0]}
+          fabbs={this.state.coordinates[1]}
+          anıtkabir={this.state.coordinates[2]}
+          tedu={this.state.coordinates[3]}
           />
         </div>
       </div>

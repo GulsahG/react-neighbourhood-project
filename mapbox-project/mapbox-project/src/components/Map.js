@@ -5,6 +5,20 @@ import MarkerIcon from './markers/MarkerIcon';
 
 class Map extends Component {
 
+    state = {
+        currentPopup: [-70,5],
+        i: ''
+    }
+
+    _updatePopup(current, index) {
+        this.setState({currentPopup : current, i:index})
+    }
+
+    _closePopup() {
+        this.setState({currentPopup: [-70,5]})
+    }
+
+
     render() {
       const Map = ReactMapboxGl({
         accessToken: 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA',
@@ -13,18 +27,19 @@ class Map extends Component {
         maxZoom: 18
       })
 
-      const { center, zoom, arabicaCoordinates, fabbsCoordinates,
-        anıtkabirCoordinates, teduCoordinates } = this.props
-        
-      const coordinates = {
-            Arabica: arabicaCoordinates,
-            Fabbs: fabbsCoordinates,
-            Anıtkabir: anıtkabirCoordinates,
-            Tedu: teduCoordinates
-        } 
-        
-      const locations = ['Arabica Coffee', 'Fabbs', 'Anıtkabir', 'Tedu']
+      const { center, zoom, arabica, fabbs,
+        anıtkabir, tedu } = this.props
+      const { currentPopup, i } = this.state
 
+      const coordinates = {
+            Arabica: arabica,
+            Fabbs: fabbs,
+            Anıtkabir: anıtkabir,
+            Tedu: tedu
+        } 
+
+      const locations = ['Arabica Coffee', 'Fabbs', 'Anıtkabir', 'TEDU']
+    
       return (
         <Map
           // eslint-disable-next-line
@@ -37,20 +52,19 @@ class Map extends Component {
                   <Marker
                     coordinates={coordinates[place]}
                     anchor= "bottom"
-                    onClick={() => {}}>
+                    onClick={() => {this._updatePopup(coordinates[place], index)}}>
                   <MarkerIcon style={{fill: 'orange'}}/>
                   </Marker>
-                  <Popup
-                    coordinates={coordinates[place]}
-                    closeOnClick={true}
-                    offset={{
-                        'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
-                    }}>
-                  <h3>{locations[index]}</h3>
-                 </Popup>
                 </div>
              )
           }
+            <Popup
+            onClick={() => {this._closePopup()}}
+            coordinates={currentPopup}
+            style={{maxWidth: 200, color: '#4264FB'}}
+            offset={{'bottom': [0, -38]}}>
+              <h3>{locations[i]}</h3>
+            </Popup>
           />
           <ZoomControl/>
         </Map>
