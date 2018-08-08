@@ -90,7 +90,7 @@ class MyMap extends Component {
                       coordinates={coordinates[index]}
                       anchor= "bottom"
                       onClick={() => {this._updatePopup(coordinates[index], index)}}>
-                    <MarkerIcon style= {{currentPopup: [-70,5]} ? {fill:"orange"} : {fill: "red"}}  />
+                    <MarkerIcon style= {{currentPopup: coordinates[index]} ? {fill:"red"} : {fill: "orange"}}  />
                     </Marker>
                   </div>
               )
