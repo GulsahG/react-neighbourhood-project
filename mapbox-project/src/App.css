@@ -22,6 +22,12 @@
   font-size: large;
 }
 
+.blue-text {
+  color: #4264FB;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+}
+
 .search-locations {
   width: 25vw;
   height: 2vw;
@@ -29,13 +35,14 @@
 
 .location-list-item {
   list-style-type: none;
-  background-color: rgb(236, 197, 124);
+  background-color: rgb(236, 181, 77);
+  border-right: 5px solid #8F0010;
   cursor:pointer;
 }
 
-.list-locations {
+.list-view {
   float:left;
-  width: 24.88vw;
+  width: 22vw;
 }
 
 @keyframes App-logo-spin {
