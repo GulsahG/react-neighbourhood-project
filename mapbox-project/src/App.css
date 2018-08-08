@@ -22,12 +22,20 @@
   font-size: large;
 }
 
-.enabled {
-  display:block !important;
+.search-locations {
+  width: 25vw;
+  height: 2vw;
 }
 
-.disabled {
-  display:none;
+.location-list-item {
+  list-style-type: none;
+  background-color: rgb(236, 197, 124);
+  cursor:pointer;
+}
+
+.list-locations {
+  float:left;
+  width: 24.88vw;
 }
 
 @keyframes App-logo-spin {
