@@ -14,6 +14,7 @@ const Map = ReactMapboxGl({
 
 class MyMap extends Component {
     state = {
+        center: [ 32.846944, 39.925054 ],
         currentPopup: [-70,5],
         i: '',
         query: ''
@@ -25,34 +26,54 @@ class MyMap extends Component {
 
     _closePopup() {
         this.setState({currentPopup: [-70,5]})
+        this.setState({ center: [ 32.846944, 39.925054 ] })
     }
 
     updateQuery = (query) => {
       this.setState({ query: query.trim() })
+      this._closePopup()
     }
 
     clearQuery = () => {
         this.setState({ query: '' })
     }
 
+    changeCenter = (current) => {
+      this.setState({ center: current })
+    }
+
     render() {
-      const { center, zoom, arabica, fabbs,
+      const { zoom, arabica,
         anıtkabir, tedu } = this.props
-      const { currentPopup, i, query } = this.state
+      const { center, currentPopup, i, query } = this.state
 
-      const coordinates = [arabica,fabbs,anıtkabir,tedu]
+      const coordinates = {
+        "Arabica Coffee": arabica,
+        "Anıtkabir": anıtkabir,
+        "Tedu": tedu
+      } 
 
-      const locations = ['Arabica Coffee', 'Fabbs', 'Anıtkabir', 'TEDU']
+      const locations = ['Arabica Coffee', 'Anıtkabir', 'TEDU']
 
       let showingLocations
+      let coordinatesFiltered
       if(query) {
         const match = new RegExp(escapeRegExp(query), 'i')
         showingLocations = locations.filter((location) => match.test(location))
+        coordinatesFiltered = Object.keys(coordinates)
+        .filter((location) => match.test(location))
+        .reduce((obj, key) => {
+          obj[key] = coordinates[key];
+          return obj;
+        }, {});
+        console.log(coordinatesFiltered)
       } else {
         showingLocations = locations
+        coordinatesFiltered = coordinates
       }
 
-      const phoneNumbers = ["(0312) 284 01 99", "(0312) 212 05 55", "(0312) 231 28 05", "(0312) 585 00 00"]
+
+      const phoneNumbers = ["(0312) 284 01 99", "(0312) 231 28 05", "(0312) 585 00 00"]
 
       return (
         <div>
@@ -70,7 +91,8 @@ class MyMap extends Component {
                     {showingLocations.map((location, index) => (
                         <li className='location-list-item'
                             key={index}
-                            onClick={() => {this._updatePopup(coordinates[index], index)}}>
+                            onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index)
+                            this.changeCenter(Object.values(coordinatesFiltered)[index])}}>
                                 <div className='location-details'>
                                     <p>{location} </p>
                                     <p><span className="blue-text">Phone:</span> {phoneNumbers[index]}</p>
@@ -88,11 +110,10 @@ class MyMap extends Component {
             { showingLocations.map((place, index) =>
                   <div key={index}>
                     <Marker
-                      key={index}
-                      coordinates={coordinates[index]}
+                      coordinates={Object.values(coordinatesFiltered)[index]}
                       anchor= "bottom"
-                      onClick={() => {this._updatePopup(coordinates[index], index)}}>
-                    <MarkerIcon style= {currentPopup === coordinates[index] ? {fill:"#4264FB",  transform: "scale(1.2)"} : {fill: "orange"}}  />
+                      onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index)}}>
+                    <MarkerIcon style= {currentPopup === Object.values(coordinatesFiltered)[index] ? {fill:"#4264FB",  transform: "scale(1.2)"} : {fill: "orange"}}  />
                     </Marker>
                   </div>
               )
@@ -102,7 +123,7 @@ class MyMap extends Component {
               coordinates={currentPopup}
               style={{maxWidth: 200, color: '#4264FB'}}
               offset={{'bottom': [0, -38]}}>
-                <h3>{locations[i]}</h3>
+                <h3>{showingLocations[i]}</h3>
             </Popup>
             />
             <ZoomControl/>

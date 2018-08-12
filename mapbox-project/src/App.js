@@ -6,10 +6,8 @@ import './App.css';
 class App extends Component {
 
   state = {
-    center: [ 32.846944, 39.925054 ],
-    zoom: [13.5,13.5],
+    zoom: [13.5, 13.5],
     coordinates: [ [ 32.825604, 39.932066 ],
-    [ 32.827547, 39.925583 ],
     [ 32.836944, 39.925054 ],
     [ 32.861673, 39.923257 ]
     ]
@@ -26,9 +24,8 @@ class App extends Component {
           center={this.state.center}
           zoom={this.state.zoom}
           arabica={this.state.coordinates[0]}
-          fabbs={this.state.coordinates[1]}
-          anıtkabir={this.state.coordinates[2]}
-          tedu={this.state.coordinates[3]}
+          anıtkabir={this.state.coordinates[1]}
+          tedu={this.state.coordinates[2]}
           />
         </div>
       </div>
