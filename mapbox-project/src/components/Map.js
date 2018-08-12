@@ -53,7 +53,7 @@ class MyMap extends Component {
       }
 
       const phoneNumbers = ["(0312) 284 01 99", "(0312) 212 05 55", "(0312) 231 28 05", "(0312) 585 00 00"]
-    
+
       return (
         <div>
         <div className="list-view">
@@ -69,11 +69,12 @@ class MyMap extends Component {
                 </div>
                     {showingLocations.map((location, index) => (
                         <li className='location-list-item'
-                        onClick={() => {this._updatePopup(coordinates[index], index)}}>
-                            <div className='location-details'>
-                                <p>{location} </p>
-                                <p><span className="blue-text">Phone:</span> {phoneNumbers[index]}</p>
-                            </div>
+                            key={index}
+                            onClick={() => {this._updatePopup(coordinates[index], index)}}>
+                                <div className='location-details'>
+                                    <p>{location} </p>
+                                    <p><span className="blue-text">Phone:</span> {phoneNumbers[index]}</p>
+                                </div>
                         </li>
                     ))}
             </div>
@@ -85,12 +86,13 @@ class MyMap extends Component {
             center= {center}
             zoom= {zoom}>
             { showingLocations.map((place, index) =>
-                  <div>
+                  <div key={index}>
                     <Marker
+                      key={index}
                       coordinates={coordinates[index]}
                       anchor= "bottom"
                       onClick={() => {this._updatePopup(coordinates[index], index)}}>
-                    <MarkerIcon style= {{currentPopup: coordinates[index]} ? {fill:"red"} : {fill: "orange"}}  />
+                    <MarkerIcon style= {currentPopup === coordinates[index] ? {fill:"#4264FB",  transform: "scale(1.2)"} : {fill: "orange"}}  />
                     </Marker>
                   </div>
               )
