@@ -87,15 +87,15 @@ class MyMap extends Component {
 
       let showingLocations
       let coordinatesFiltered
-      if(query) {
+      if(query && query !== 's' && query !== 'se' && query !=='h' && query !== 'u'){
         const match = new RegExp(escapeRegExp(query), 'i')
         showingLocations = locations.filter((location) => match.test(location))
         coordinatesFiltered = Object.keys(coordinates)
         .filter((location) => match.test(location))
         .reduce((obj, key) => {
-          obj[key] = coordinates[key];
-          return obj;
-        }, {});
+          obj[key] = coordinates[key]
+          return obj
+        }, {})
       } else {
         showingLocations = locations
         coordinatesFiltered = coordinates
