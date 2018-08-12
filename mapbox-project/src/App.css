@@ -28,6 +28,12 @@
   font-weight: bold;
 }
 
+.orange-text {
+  color: rgb(196, 112, 9);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+
 .search-locations {
   width: 25vw;
   height: 2vw;
@@ -38,11 +44,15 @@
   background-color: rgb(236, 181, 77);
   border-right: 5px solid #8F0010;
   cursor:pointer;
+  width:20vw;
 }
 
 .list-view {
   float:left;
   width: 22vw;
+  height: 85.2vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 @keyframes App-logo-spin {

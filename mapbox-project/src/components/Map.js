@@ -15,20 +15,22 @@ const Map = ReactMapboxGl({
 class MyMap extends Component {
     state = {
         center: [ 32.846944, 39.925054 ],
+        zoom: [11.5, 11.5],
         currentPopup: [-70,5],
         i: '',
-        query: ''
+        query: '',
+        infoContent: ''
     }
 
-    _updatePopup(current, index) {
-        this.setState({currentPopup : current, i:index})
+    _updatePopup(current, index, place) {
+        this.setState({ currentPopup : current, i:index })
+        this.wikipediaInfo(place)
     }
 
     _closePopup() {
-        this.setState({currentPopup: [-70,5]})
-        this.setState({ center: [ 32.846944, 39.925054 ] })
+        this.setState({ currentPopup: [-70,5], center: [ 32.846944, 39.925054 ], zoom: [ 11.5, 11.5] })
     }
-
+    
     updateQuery = (query) => {
       this.setState({ query: query.trim() })
       this._closePopup()
@@ -39,21 +41,49 @@ class MyMap extends Component {
     }
 
     changeCenter = (current) => {
-      this.setState({ center: current })
+      this.setState({ center: current, zoom: [ 12.5, 12.5 ] })
     }
 
+    // fetching the wikipedia API
+    wikipediaInfo = (location) => {
+      let url = `https://tr.wikipedia.org/w/api.php?&origin=*&action=opensearch&format=json&limit=1&search=${location}`;
+      fetch(url)
+      .then(function(response) {
+        return response.json();
+      }).then( (data) => {
+        data[2][0] !== undefined ?
+        this.setState({
+            infoContent: data[2][0]
+        }) :
+        this.setState({
+          infoContent: "Location cannot found, check wikipedia for more..."
+        })
+        console.log(this.state.infoContent)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    } 
+
     render() {
-      const { zoom, arabica,
-        anıtkabir, tedu } = this.props
-      const { center, currentPopup, i, query } = this.state
+      const { arabica,
+        anıtkabir, tedu, hacettepe, timboo, muddy, club, ankamall, seğmenler } = this.props
+      const { zoom, center, currentPopup, i, query, infoContent } = this.state
 
       const coordinates = {
         "Arabica Coffee": arabica,
         "Anıtkabir": anıtkabir,
-        "Tedu": tedu
+        "TED University": tedu,
+        "Hacettepe University": hacettepe,
+        "Timboo Cafe": timboo,
+        "The Muddy Waters": muddy,
+        "6:45 Club": club,
+        "Ankamall": ankamall,
+        "Seğmenler Park": seğmenler
       } 
 
-      const locations = ['Arabica Coffee', 'Anıtkabir', 'TEDU']
+      const locations = ['Arabica Coffee House', 'Anıtkabir', 'TED University', 'Hacettepe University',
+       'Timboo Cafe', "The Muddy Waters", "6:45 Club", "Ankamall", "Seğmenler Park"]
 
       let showingLocations
       let coordinatesFiltered
@@ -66,14 +96,14 @@ class MyMap extends Component {
           obj[key] = coordinates[key];
           return obj;
         }, {});
-        console.log(coordinatesFiltered)
       } else {
         showingLocations = locations
         coordinatesFiltered = coordinates
       }
 
 
-      const phoneNumbers = ["(0312) 284 01 99", "(0312) 231 28 05", "(0312) 585 00 00"]
+      const phoneNumbers = ["(0312) 284 01 99", "(0312) 231 28 05", "(0312) 585 00 00",
+      "(0312) 305 50 00", "(0312) 219 01 10", "0537 930 10 96", "0553 050 06 45", "(0312) 541 12 12", "(0312) 458 89 00"]
 
       return (
         <div>
@@ -91,7 +121,7 @@ class MyMap extends Component {
                     {showingLocations.map((location, index) => (
                         <li className='location-list-item'
                             key={index}
-                            onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index)
+                            onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index, location)
                             this.changeCenter(Object.values(coordinatesFiltered)[index])}}>
                                 <div className='location-details'>
                                     <p>{location} </p>
@@ -104,7 +134,7 @@ class MyMap extends Component {
           <Map
             // eslint-disable-next-line
             style="mapbox://styles/gulsahg/cjk6xey2zd5h02rnv9kslj2vm"
-            containerStyle={{ width: '75vw', height: '85.2vh', float: 'right' }}
+            containerStyle={{ width: '76vw', height: '85.2vh', float: 'right' }}
             center= {center}
             zoom= {zoom}>
             { showingLocations.map((place, index) =>
@@ -112,8 +142,10 @@ class MyMap extends Component {
                     <Marker
                       coordinates={Object.values(coordinatesFiltered)[index]}
                       anchor= "bottom"
-                      onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index)}}>
-                    <MarkerIcon style= {currentPopup === Object.values(coordinatesFiltered)[index] ? {fill:"#4264FB",  transform: "scale(1.2)"} : {fill: "orange"}}  />
+                      onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index, place)}}>
+                      <MarkerIcon style= {currentPopup === Object.values(coordinatesFiltered)[index] ? 
+                      {fill:"#4264FB",  transform: "scale(1.2)"} : {fill: "orange"}} 
+                      />
                     </Marker>
                   </div>
               )
@@ -124,6 +156,7 @@ class MyMap extends Component {
               style={{maxWidth: 200, color: '#4264FB'}}
               offset={{'bottom': [0, -38]}}>
                 <h3>{showingLocations[i]}</h3>
+                <p className="orange-text">{infoContent}</p>
             </Popup>
             />
             <ZoomControl/>

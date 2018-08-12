@@ -8,6 +8,7 @@
     "mapbox-gl": "^0.47.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-foursquare": "^1.0.3",
     "react-mapbox": "^0.1.0",
     "react-mapbox-gl": "^3.8.0",
     "react-scripts": "1.1.4",
