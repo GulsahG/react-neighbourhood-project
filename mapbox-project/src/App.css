@@ -2,9 +2,10 @@
   text-align: center;
 }
 
-.App-logo {
+.Map-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+  margin-left: 10vw;
 }
 
 .App-header {
@@ -14,12 +15,19 @@
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
+/*This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 License.
+™ Wikimedia Foundation, Inc. */
+.Wiki-logo  {
+  float: right;
+  width: 3.5vw;
+  margin-top: 1.3vw;
 }
 
-.App-intro {
-  font-size: large;
+.Wiki-title {
+  float: right;
+  margin: 2.1vw 0.5vw 0 0;
+  font-weight: 200;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .blue-text {
@@ -30,9 +38,8 @@
 
 .orange-text {
   color: rgb(196, 112, 9);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 
 .search-locations {
   width: 25vw;

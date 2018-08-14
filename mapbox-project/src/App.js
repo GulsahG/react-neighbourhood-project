@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import wikiLogo from './wikipedia-logo.svg'
 import Map from './components/Map';
 import './App.css';
 
@@ -19,7 +20,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="Map-logo" alt="mapbox logo" />
+          <img src={wikiLogo} className="Wiki-logo "alt="wikipedia logo" />
+          <h3 className="Wiki-title">Wikipedia</h3>
         </header>
         <div className='container'>
           <Map 
