@@ -117,7 +117,7 @@ class MyMap extends Component {
             <ol className='list-locations' aria-label='list-locations'>
               <div className='list-locations-top'>
                 <input
-                  tabIndex='1'
+                  tabIndex='5'
                   aria-label='Search locations'
                   role='search'
                   className='search-locations'
@@ -130,7 +130,7 @@ class MyMap extends Component {
                   {showingLocations.length > 0 ? 
                     showingLocations.map((location, index) => (
                         <li className='location-list-item'
-                            tabIndex='1'
+                            tabIndex='0'
                             key={index}
                             onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index, location)
                             this.changeCenter(Object.values(coordinatesFiltered)[index])}}>
@@ -167,7 +167,7 @@ class MyMap extends Component {
               )
             }
             <Popup
-              tabIndex='1'
+              tabIndex='0'
               onClick={() => {this._closePopup()}}
               coordinates={currentPopup}
               style={{maxWidth: 200, color: '#4264FB'}}

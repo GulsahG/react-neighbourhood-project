@@ -67,6 +67,12 @@
   padding:0;
 }
 
+.search-locations:focus, .location-list-item:focus {
+  outline: none !important;
+  border: 3.5px solid #4264FB;
+  box-shadow: 0 0 20px rgb(236, 181, 77);
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
