@@ -14,6 +14,7 @@ const Map = ReactMapboxGl({
 
 class MyMap extends Component {
     state = {
+        hasError: false,
         center: [ 32.846944, 39.925054 ],
         zoom: [11.5, 11.5],
         currentPopup: [-70,5],
@@ -23,12 +24,12 @@ class MyMap extends Component {
     }
 
     _updatePopup(current, index, place) {
-        this.setState({ currentPopup : current, i:index })
-        this.wikipediaInfo(place)
+      this.setState({ currentPopup : current, i:index })
+      this.wikipediaInfo(place)
     }
 
     _closePopup() {
-        this.setState({ currentPopup: [-70,5], center: [ 32.846944, 39.925054 ], zoom: [ 11.5, 11.5] })
+      this.setState({ currentPopup: [-70,5], center: [ 32.846944, 39.925054 ], zoom: [ 11.5, 11.5] })
     }
     
     updateQuery = (query) => {
@@ -37,7 +38,7 @@ class MyMap extends Component {
     }
 
     clearQuery = () => {
-        this.setState({ query: '' })
+      this.setState({ query: '' })
     }
 
     changeCenter = (current) => {
@@ -56,14 +57,19 @@ class MyMap extends Component {
             infoContent: data[2][0]
         }) :
         this.setState({
-          infoContent: "Location cannot found, check wikipedia for more..."
+          infoContent: "Location info cannot found, check Wikipedia for more..."
         })
         console.log(this.state.infoContent)
       })
       .catch(err => {
-        console.log(err)
+        alert(err)
       })
-    } 
+    }
+
+    componentDidCatch(error, info) {
+      this.setState({ hasError: true });
+      console.log(error, info);
+    }
 
     render() {
       const { arabica,
@@ -108,9 +114,12 @@ class MyMap extends Component {
       return (
         <div>
         <div className="list-view">
-            <div className='list-locations'>
+            <ol className='list-locations' aria-label='list-locations'>
               <div className='list-locations-top'>
                 <input
+                  tabIndex='1'
+                  aria-label='Search locations'
+                  role='search'
                   className='search-locations'
                   type='text'
                   placeholder='Search locations by its name'
@@ -118,8 +127,10 @@ class MyMap extends Component {
                   onChange={(event) => this.updateQuery(event.target.value)}
                   />
                 </div>
-                    {showingLocations.map((location, index) => (
+                  {showingLocations.length > 0 ? 
+                    showingLocations.map((location, index) => (
                         <li className='location-list-item'
+                            tabIndex='1'
                             key={index}
                             onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index, location)
                             this.changeCenter(Object.values(coordinatesFiltered)[index])}}>
@@ -128,9 +139,14 @@ class MyMap extends Component {
                                     <p><span className="blue-text">Phone:</span> {phoneNumbers[index]}</p>
                                 </div>
                         </li>
-                    ))}
+                    ))
+                    : 
+                    <h2>No locations found that match selection criteria</h2>
+                  }
+            </ol>
             </div>
-            </div>
+          {!this.state.hasError ?
+          <div id="my-map" role="application">
           <Map
             // eslint-disable-next-line
             style="mapbox://styles/gulsahg/cjk6xey2zd5h02rnv9kslj2vm"
@@ -151,6 +167,7 @@ class MyMap extends Component {
               )
             }
             <Popup
+              tabIndex='1'
               onClick={() => {this._closePopup()}}
               coordinates={currentPopup}
               style={{maxWidth: 200, color: '#4264FB'}}
@@ -161,6 +178,10 @@ class MyMap extends Component {
             />
             <ZoomControl/>
           </Map>
+          </div>
+          :
+          <h1>Map couldn't load properly, something went wrong.</h1>
+          }
         </div>
       );
     }

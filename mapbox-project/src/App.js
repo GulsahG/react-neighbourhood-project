@@ -7,6 +7,7 @@ import './App.css';
 class App extends Component {
 
   state = {
+    hasError: false,
     coordinates: [ [ 32.825604, 39.932066 ],
     [ 32.836944, 39.925054 ], [ 32.861673, 39.923257 ],
     [ 32.734754, 39.867520], [ 32.809319, 39.913345],
@@ -15,8 +16,12 @@ class App extends Component {
     ]
   }
 
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+    console.log(error, info);
+  }
+  
   render() {
-
     return (
       <div className="App">
         <header className="App-header">
@@ -25,6 +30,7 @@ class App extends Component {
           <h3 className="Wiki-title">Wikipedia</h3>
         </header>
         <div className='container'>
+        {!this.state.hasError ? 
           <Map 
           center={this.state.center}
           zoom={this.state.zoom}
@@ -38,9 +44,11 @@ class App extends Component {
           ankamall= {this.state.coordinates[7]}
           seğmenler= {this.state.coordinates[8]}
           />
+          :
+          <h1>Page couldn't load properly, something went wrong.</h1>
+        }
         </div>
       </div>
-      
     );
   }
 }
