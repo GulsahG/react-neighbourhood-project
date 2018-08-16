@@ -4,14 +4,14 @@
 
 .Map-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 10vh;
   margin-left: 10vw;
 }
 
 .App-header {
   background-color: #222;
-  height: 75px;
-  padding: 20px;
+  height: 9.6vh;
+  padding: 1rem;
   color: white;
 }
 
@@ -19,13 +19,14 @@
 ™ Wikimedia Foundation, Inc. */
 .Wiki-logo  {
   float: right;
-  width: 3.5vw;
-  margin-top: 1.3vw;
+  height: 6.5vh;
+  margin-top: 4vh;
 }
 
 .Wiki-title {
   float: right;
-  margin: 2.1vw 0.5vw 0 0;
+  font-size: 1.5rem;
+  margin: 5.5vh 0.5vw 0 0;
   font-weight: 200;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -43,13 +44,13 @@
 
 .search-locations {
   width: 25vw;
-  height: 2vw;
+  height: 5vh;
 }
 
 .location-list-item {
   list-style-type: none;
   background-color: rgb(236, 181, 77);
-  border-right: 5px solid #8F0010;
+  border-right: 0.4rem solid #8F0010;
   cursor:pointer;
   width:20vw;
 }
@@ -57,7 +58,7 @@
 .list-view {
   float:left;
   width: 22vw;
-  height: 85.2vh;
+  height: 86.5vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -69,11 +70,29 @@
 
 .search-locations:focus, .location-list-item:focus {
   outline: none !important;
-  border: 3.5px solid #4264FB;
-  box-shadow: 0 0 20px rgb(236, 181, 77);
+  border: 0.15rem solid #4264FB;
+  box-shadow: 0 0 1rem rgb(236, 181, 77);
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media screen and (min-width: 320px) and (max-width: 950px) {
+  .map {
+    width: 55vw !important;
+  }
+  .list-view {
+    width: 43vw !important;
+  }
+  .location-list-item {
+    width: 41vw;
+  }
+  .search-locations {
+    width: 42vw;
+  }
+}
+
+
+

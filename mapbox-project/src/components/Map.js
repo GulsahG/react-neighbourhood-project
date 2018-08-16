@@ -150,9 +150,10 @@ class MyMap extends Component {
           <Map
             // eslint-disable-next-line
             style="mapbox://styles/gulsahg/cjk6xey2zd5h02rnv9kslj2vm"
-            containerStyle={{ width: '76vw', height: '85.2vh', float: 'right' }}
+            containerStyle={{ width: '76vw', height: '86.6vh', float: 'right' }}
             center= {center}
-            zoom= {zoom}>
+            zoom= {zoom}
+            className= "map">
             { showingLocations.map((place, index) =>
                   <div key={index}>
                     <Marker
