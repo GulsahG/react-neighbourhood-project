@@ -16,6 +16,7 @@ class App extends Component {
     ]
   }
 
+  // checks for errors and updates the state
   componentDidCatch(error, info) {
     this.setState({ hasError: true });
     console.log(error, info);
