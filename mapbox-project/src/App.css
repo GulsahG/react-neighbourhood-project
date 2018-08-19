@@ -40,6 +40,7 @@
 .orange-text {
   color: rgb(196, 112, 9);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
 }
 
 .search-locations {
@@ -91,6 +92,11 @@
   }
   .search-locations {
     width: 42vw;
+  }
+  .orange-text {
+    font-size: 12px !important;
+    margin: 0;
+    padding: 0;
   }
 }
 

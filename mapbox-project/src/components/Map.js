@@ -45,12 +45,18 @@ class MyMap extends Component {
       this.setState({ center: current, zoom: [ 12.5, 12.5 ] })
     }
 
+    updateZoom() {
+      window.innerWidth < 950 ?
+      this.setState({ zoom: [10.5, 10.5] })
+      : this.setState({ zoom: [11.5, 11.5] })
+    }
+
     // fetching the wikipedia API
     wikipediaInfo = (location) => {
       let url = `https://tr.wikipedia.org/w/api.php?&origin=*&action=opensearch&format=json&limit=1&search=${location}`;
       fetch(url)
       .then(function(response) {
-        return response.json();
+        return response.json()
       }).then( (data) => {
         data[2][0] !== undefined ?
         this.setState({
@@ -59,7 +65,6 @@ class MyMap extends Component {
         this.setState({
           infoContent: "Location info cannot found, check Wikipedia for more..."
         })
-        console.log(this.state.infoContent)
       })
       .catch(err => {
         alert(err)
@@ -67,8 +72,13 @@ class MyMap extends Component {
     }
 
     componentDidCatch(error, info) {
-      this.setState({ hasError: true });
-      console.log(error, info);
+      this.setState({ hasError: true })
+      console.log(error, info)
+    }
+
+    componentDidMount() {
+      this.updateZoom()
+      window.addEventListener("resize", this.updateZoom.bind(this));
     }
 
     render() {
@@ -173,7 +183,7 @@ class MyMap extends Component {
               coordinates={currentPopup}
               style={{maxWidth: 200, color: '#4264FB'}}
               offset={{'bottom': [0, -38]}}>
-                <h3>{showingLocations[i]}</h3>
+                <h2>{showingLocations[i]}</h2>
                 <p className="orange-text">{infoContent}</p>
             </Popup>
             />

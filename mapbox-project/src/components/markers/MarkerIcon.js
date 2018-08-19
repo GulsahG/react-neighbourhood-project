@@ -1,12 +1,13 @@
 import React from 'react';
 import './MarkerIcon.css';
+
 const MarkerIcon = ({ style }) => {
   return (
     <svg className= "marker-icon" version="1.1"
          id="Capa_1"
          x="0px"
          y="0px"
-         width="40px"
+         width ="40px"
          height="40px"
          viewBox="0 0 512 512"
          style={style}>
