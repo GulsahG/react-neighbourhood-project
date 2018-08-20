@@ -5,8 +5,9 @@ import escapeRegExp from 'escape-string-regexp'
 import MarkerIcon from './markers/MarkerIcon';
 import '../App.css'
 
+const APIkey = 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA';
 const Map = ReactMapboxGl({
-    accessToken: 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA',
+    accessToken: APIkey,
     minZoom: 8,
     doubleClickZoom: true,
     maxZoom: 18
@@ -85,7 +86,11 @@ class MyMap extends Component {
     // invokes the updateZoom function on device resizing 
     componentDidMount() {
       this.updateZoom()
-      window.addEventListener("resize", this.updateZoom.bind(this));
+      window.addEventListener("resize", this.updateZoom.bind(this))
+    }
+
+    handleError() {
+      this.setState({ hasError: true })
     }
 
     render() {
@@ -149,6 +154,7 @@ class MyMap extends Component {
                   {showingLocations.length > 0 ? 
                     showingLocations.map((location, index) => (
                         <li className='location-list-item'
+                            role='link'
                             tabIndex='0'
                             key={index}
                             onClick={() => {this._updatePopup(Object.values(coordinatesFiltered)[index], index, location)
@@ -164,7 +170,7 @@ class MyMap extends Component {
                   }
             </ol>
             </div>
-          {!this.state.hasError ?
+          {(!this.state.hasError && APIkey === 'pk.eyJ1IjoiZ3Vsc2FoZyIsImEiOiJjams2eGVsNnIxdGQ5M3BuNXhzaXkzeGNjIn0.T_W701upxXuPA5oSsHJypA') ?
           <div id="my-map" role="application">
           <Map
             // eslint-disable-next-line
@@ -200,7 +206,7 @@ class MyMap extends Component {
           </Map>
           </div>
           :
-          <h1>Map couldn't load properly, something went wrong.</h1>
+          <h1>Mapbox API couldn't load properly.</h1>
           }
         </div>
       );
