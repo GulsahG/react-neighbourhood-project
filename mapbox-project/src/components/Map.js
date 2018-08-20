@@ -89,10 +89,6 @@ class MyMap extends Component {
       window.addEventListener("resize", this.updateZoom.bind(this))
     }
 
-    handleError() {
-      this.setState({ hasError: true })
-    }
-
     render() {
       const { arabica,
         anıtkabir, tedu, hacettepe, timboo, muddy, club, ankamall, seğmenler } = this.props
